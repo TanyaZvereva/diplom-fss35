@@ -20,6 +20,20 @@ app.use((req, res, next) => {
     res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
     next()
 })
+app.use(async (req, res, next) => {
+    if(req.request_url.includes('user')){
+        return next()
+    }
+    if (req.headers.authorization) {
+        const token = req.headers.authorization.split(' ')[1]
+      jwt.verify(token, 'shhhhh', function(err, decoded) {
+        console.log(decoded.foo) // bar
+        next()
+      });
+    } else {
+          res.status(401).send('You need authorization')
+      }
+  })
 app.use('/api', cinemaRouters)
 
 

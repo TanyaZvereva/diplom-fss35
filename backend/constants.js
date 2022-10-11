@@ -9,5 +9,6 @@ module.exports = constants = {
         port: 5432
     },
     origin: 'http://localhost:3000',
-    port: 8000
+    port: 8000,
+    privateKey: 'december'
 }
