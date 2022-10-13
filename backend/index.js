@@ -1,7 +1,10 @@
+const jwt = require('jsonwebtoken')
+const {privateKey} = require('./constants')
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
+
 
 const cinemaRouters = require('./routers/cinemaRouter')
 
@@ -21,14 +24,15 @@ app.use((req, res, next) => {
     next()
 })
 app.use(async (req, res, next) => {
-    if(req.request_url.includes('user')){
+    if(req.originalUrl.includes('user')){
         return next()
     }
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1]
-      jwt.verify(token, 'shhhhh', function(err, decoded) {
-        console.log(decoded.foo) // bar
-        next()
+        console.log(req.headers)
+      jwt.verify(token, privateKey, function(err, decoded) {
+        console.log(decoded) // bar
+        return next()
       });
     } else {
           res.status(401).send('You need authorization')

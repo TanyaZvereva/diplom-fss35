@@ -1,10 +1,9 @@
 const connect = require('../database');
 const myConnect = connect
-const {listFormatter} = require('../formatters/projects')
 
 const sqlCreateUser = {
   text: `INSERT INTO public.user (login, password) VALUES ($1, $2)
-    RETURNING id, login, password`
+    RETURNING login, password`
 }
 
 const sqlProjectById = {

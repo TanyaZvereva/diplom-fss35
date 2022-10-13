@@ -21,7 +21,7 @@ const sqlDeleteSession = {
 
 const sqlCreateMovie = {
     text: `INSERT INTO public.movie (info) VALUES ($1)
-      RETURNING id, info`
+      RETURNING info`
   }
   
   const sqlShowsMovie = {

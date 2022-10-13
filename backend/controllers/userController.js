@@ -1,5 +1,5 @@
 const {createUser, readUser} = require('../models/user')
-const jwt = require('jwt')
+const jwt = require('jsonwebtoken')
 const {privateKey} = require('../constants')
 
 const user_create = async (req, res) => {
@@ -12,10 +12,12 @@ const user_create = async (req, res) => {
 const user_auth = async (req, res) => {
   const {body: {login, password}} = req
   const {status, data} = await readUser(login, password);
-  jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256' }, function(err, token) {
+  if(data && data.rows && data.rows[0]) {
+    const token = jwt.sign( data.rows[0], privateKey);
     res.status(status).send(token);
-  });
-  
+  }else{
+    res.status(401).send('User not found');
+  }
 }
 
 module.exports = {
