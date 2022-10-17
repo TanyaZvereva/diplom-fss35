@@ -11,12 +11,12 @@ const ticket_create = async (req, res) => {
   const code = uuidv4()
   const {status} = await createTicket(session_id, place_id, code)
   
-  res.status(status);
+  res.status(status).send('ok');
 }
 const ticket_remove = async (req, res) => {
     const {body: {id}} = req
     const {status, data} = await removeTicket(id);
-      res.status(status);
+      res.status(status).send('ok');
   }
 
 module.exports = {

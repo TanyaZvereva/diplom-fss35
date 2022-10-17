@@ -8,7 +8,7 @@ const cinemahall_create = async (req, res) => {
   const {body: {count_x, count_y}} = req
   const {status} = await createCinemahall(count_x, count_y)
   
-  res.status(status);
+  res.status(status).send('ok');
 }
 
 const cinemahall_edit = async (req, res) => {
@@ -20,7 +20,7 @@ const cinemahall_edit = async (req, res) => {
 const cinemahall_remove = async (req, res) => {
     const {body: {id}} = req
     const {status, data} = await removeCinemahall(id);
-      res.status(status);
+      res.status(status).send('ok');
   }
 
 const place_read = async (req, res) => {
@@ -33,7 +33,7 @@ const place_create = async (req, res) => {
   const {body: {hall_id, is_vip, row}} = req
   const {status} = await createPlace(hall_id, is_vip, row);
   
-  res.status(status);
+  res.status(status).send('ok');
 }
 
 const place_edit = async (req, res) => {
@@ -45,7 +45,7 @@ const place_edit = async (req, res) => {
 const place_remove = async (req, res) => {
     const {body: {id}} = req
     const {status, data} = await removePlace(id);
-      res.status(status);
+      res.status(status).send('ok');
   }
 
 module.exports = {

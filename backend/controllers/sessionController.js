@@ -21,7 +21,7 @@ const session_edit = async (req, res) => {
 const session_remove = async (req, res) => {
     const {body: {id}} = req
     const {status, data} = await removeSession(id);
-      res.status(status);
+      res.status(status).send('ok');
   }
 
 const movie_read = async (req, res) => {
@@ -33,7 +33,7 @@ const movie_create = async (req, res) => {
   const {body: {info}} = req
   const {status} = await createMovie(info);
   
-  res.status(status);
+  res.status(status).send('ok');
 }
 
 const movie_edit = async (req, res) => {
@@ -45,7 +45,7 @@ const movie_edit = async (req, res) => {
 const movie_remove = async (req, res) => {
     const {body: {id}} = req
     const {status, data} = await removeMovie(id);
-      res.status(status);
+      res.status(status).send('ok');
   }
 
 module.exports = {
