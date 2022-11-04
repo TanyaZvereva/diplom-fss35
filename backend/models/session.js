@@ -1,6 +1,3 @@
-const connect = require('../database');
-const myConnect = connect
-
 const sqlCreateSession = {
   text: `INSERT INTO public.session (time_start, time_end, movie_id) VALUES ($1, $2, $3)
     RETURNING id, time_start, time_end, movie_id`
@@ -37,41 +34,14 @@ const sqlCreateMovie = {
     text: `DELETE FROM public.movie WHERE id=$1;`
   }
 
+  module.exports = {
+    sqlCreateSession,
+    sqlShowsSession,
+    sqlShowsSession,
+    sqlDeleteSession,
+    sqlCreateMovie,
+    sqlShowsMovie,
+    sqlUpdateMovie,
+    sqlDeleteMovie
+  }
 
-
-const readSession = async () => ({status : 200, data: await myConnect.query(sqlShowsSession)})
-
-const createSession = async (time_start, time_end, movie_id) => {
-  const newProject = await myConnect.query(sqlCreateSession, [time_start, time_end, movie_id])
-  return {status: 200, data: newProject.rows[0]}
-}
-
-const editSession = async (id, time_start, time_end) => {
-  return {status: 200, data: await myConnect.query(sqlUpdateSession, [time_start, time_end, id])}
-}
-
-const removeSession = async (id) => ({status: 200, data: await myConnect.query(sqlDeleteSession, [id])})
-
-const readMovie = async () => ({status : 200, data: await myConnect.query(sqlShowsMovie)})
-
-const createMovie = async (info) => {
-  const newProject = await myConnect.query(sqlCreateMovie, [info])
-  return {status: 200, data: newProject.rows[0]}
-}
-
-const editMovie = async (id,info) => {
-  return {status: 200, data: await myConnect.query(sqlUpdateMovie, [info, id])}
-}
-
-const removeMovie = async (id) => ({status: 200, data: await myConnect.query(sqlDeleteMovie, [id])})
-
-module.exports = {
-  readSession,
-  createSession,
-  editSession,
-  removeSession,
-  readMovie,
-  createMovie,
-  editMovie,
-  removeMovie
-}

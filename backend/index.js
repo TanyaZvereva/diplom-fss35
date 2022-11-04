@@ -38,6 +38,7 @@ app.use(async (req, res, next) => {
           res.status(401).send('You need authorization')
       }
   })
+  
 app.use('/api', cinemaRouters)
 
 

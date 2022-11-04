@@ -3,7 +3,11 @@ const {pgSettings} = require('./constants');
 
 const connect = () => {
     const myClient = new Client(pgSettings);
-    myClient.connect();
+    try{
+        myClient.connect();
+    }catch(err){
+        console.log(err)
+    }
     return myClient
 }
 
