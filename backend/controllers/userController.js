@@ -1,6 +1,7 @@
-const {createUser, readUser} = require('../models/user')
+const {createUser, readUser, getClientData, getClientPlaces} = require('../services/user')
 const jwt = require('jsonwebtoken')
 const {privateKey} = require('../constants')
+const {removeCinemahall} = require("../services/place");
 
 const user_create = async (req, res) => {
   const {body: {login, password}} = req
@@ -28,7 +29,20 @@ const user_auth = async (req, res) => {
   }
 }
 
+
+const get_client_data = async (req, res) => {
+  const {status, data} = await getClientData();
+  res.status(status).send(data.rows);
+}
+
+const get_client_places = async (req, res) => {
+  const {status, data} = await getClientPlaces(req.params.id);
+  res.status(status).send(data.rows);
+}
+
 module.exports = {
   user_create,
-  user_auth
+  user_auth,
+  get_client_data,
+  get_client_places
 }

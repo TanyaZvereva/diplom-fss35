@@ -3,7 +3,7 @@ module.exports = constants = {
         user: 'postgres',
         host: 'localhost',
         database: 'cinema',
-        password: '123456',
+        password: 'blablabla5',
         port: 5432
     },
     origin: 'http://localhost:3000',

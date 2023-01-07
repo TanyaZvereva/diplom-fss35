@@ -1,5 +1,5 @@
-const {sqlCreateUser, sqlDeleteProject, sqlDeleteTasksByProject, sqlGetUser, sqlProjectById, sqlUpdateProjects, sqlUserByLogin} = 
-require('..models/user')
+const {sqlCreateUser, sqlDeleteProject, sqlDeleteTasksByProject, sqlGetUser, sqlProjectById, sqlUpdateProjects, sqlClientData, sqlClientPlaces, sqlUserByLogin} =
+require('../models/user')
 const connect = require('../database');
 const myConnect = connect
 
@@ -19,6 +19,9 @@ const createUser = async (login, password) => {
 
 //await awaits a promise
 const readUser = async (login, password) => ({status: 200, data: await myConnect.query(sqlGetUser, [login, password])})
+
+const getClientData = async () => ({status: 200, data: await myConnect.query(sqlClientData, [])})
+const getClientPlaces = async (hall) => ({status: 200, data: await myConnect.query(sqlClientPlaces, [hall])})
 
 const updateProject = async (name, code, id) => {
   const {data : {rows}} = await readOneProject(id)
@@ -41,5 +44,7 @@ module.exports = {
   deleteTasksByProject,
   updateProject,
   readOneProject,
-  readOneUserByLogin
+  readOneUserByLogin,
+  getClientData,
+  getClientPlaces
 }

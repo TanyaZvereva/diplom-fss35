@@ -15,6 +15,16 @@ const sqlGetUser = {
   text: `SELECT * FROM public.user WHERE login=$1 AND password=$2`
 }
 
+const sqlClientData = {
+  text: `SELECT * FROM public.session
+        INNER JOIN public.movie ON movie.id = session.movie_id
+        INNER JOIN public.cinema_hall ON cinema_hall.id = session.cinemahall_id`
+}
+
+const sqlClientPlaces = {
+  text: `SELECT * FROM public.place WHERE hall_id=$1`
+}
+
 const sqlUpdateProjects = {
   text: `UPDATE projectdeskdb.projects SET name=$1, code=$2 WHERE id=$3
     RETURNING id, name, code`
@@ -35,5 +45,7 @@ module.exports = {
   sqlGetUser,
   sqlUpdateProjects,
   sqlDeleteProject,
-  sqlDeleteTasksByProject
+  sqlDeleteTasksByProject,
+  sqlClientData,
+  sqlClientPlaces
 }

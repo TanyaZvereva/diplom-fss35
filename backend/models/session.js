@@ -1,10 +1,12 @@
 const sqlCreateSession = {
-  text: `INSERT INTO public.session (time_start, time_end, movie_id) VALUES ($1, $2, $3)
-    RETURNING id, time_start, time_end, movie_id`
+  text: `INSERT INTO public.session (time_start, cinemahall_id, movie_id) VALUES ($1, $2, $3)
+    RETURNING id, time_start, cinemahall_id, movie_id`
 }
 
 const sqlShowsSession = {
-  text: `SELECT * FROM public.session`
+  text: `SELECT time_start, cinemahall_id, movie_id, movie.info, movie.duration  FROM public.session
+        INNER JOIN public.movie on movie.id = session.movie_id
+        ORDER BY cinemahall_id`
 }
 
 const sqlUpdateSession = {
@@ -17,7 +19,7 @@ const sqlDeleteSession = {
 }
 
 const sqlCreateMovie = {
-    text: `INSERT INTO public.movie (info) VALUES ($1)
+    text: `INSERT INTO public.movie (info, duration) VALUES ($1, $2)
       RETURNING info`
   }
   
@@ -26,8 +28,8 @@ const sqlCreateMovie = {
   }
   
   const sqlUpdateMovie = {
-    text: `UPDATE public.movie SET info=$1 WHERE id=$2
-      RETURNING id, info`
+    text: `UPDATE public.movie SET info=$1, duration=$3 WHERE id=$2
+      RETURNING id, info, duration`
   }
   
   const sqlDeleteMovie = {
@@ -36,7 +38,6 @@ const sqlCreateMovie = {
 
   module.exports = {
     sqlCreateSession,
-    sqlShowsSession,
     sqlShowsSession,
     sqlDeleteSession,
     sqlCreateMovie,
